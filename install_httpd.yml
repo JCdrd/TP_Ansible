@@ -11,10 +11,11 @@
     service:
       name: httpd
       state: started
-  - name: Enable service to start on boot up
-    service:
+  - name: enable service httpd and ensure it is not masked
+    systemd:
       name: httpd
-      state: started
+      enabled: yes
+      masked: no
   - name: Create firewall rule for apache service
     firewalld:
       service: http
@@ -22,6 +23,7 @@
       permanent: yes
       immediate: yes
       state: enabled
+
   handlers:
   - name: Restart apache service
     service:
